@@ -11,8 +11,8 @@ Assumes that `RAILS_ENV` matches stage, tasks are currently early examples
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano', github: 'capistrano/capistrano', branch: 'v3'
-    gem 'capistrano-rails', github: 'seenmyfate/capistrano-rails', branch: :master
+    gem 'capistrano', version: '~> 3.0.0'
+    gem 'capistrano-rails', version: '~> 1.0.0'
 
 And then execute:
 
