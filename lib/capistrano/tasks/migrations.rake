@@ -9,6 +9,6 @@ namespace :deploy do
     end
   end
 
-  before 'deploy:finalize', 'deploy:migrate'
+  after 'deploy:update', 'deploy:migrate'
 end
 
