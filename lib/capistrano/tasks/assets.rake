@@ -9,5 +9,5 @@ namespace :deploy do
     end
   end
 
-  after :finalize, 'deploy:normalise_assets'
+  after 'deploy:updated', 'deploy:normalise_assets'
 end
