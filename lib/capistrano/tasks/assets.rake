@@ -4,6 +4,10 @@ module Capistrano
 end
 
 namespace :deploy do
+  before :starting, :set_shared_assets do
+    set :linked_dirs, (fetch(:linked_dirs) || []).push('public/assets')
+  end
+
   desc 'Normalise asset timestamps'
   task :normalise_assets do
     on roles :web do
