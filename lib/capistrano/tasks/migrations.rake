@@ -4,7 +4,9 @@ namespace :deploy do
   task :migrate do
     on primary :db do
       within release_path do
-        execute :rake, "db:migrate RAILS_ENV=#{fetch(:stage)}"
+        with rails_env: fetch(:stage) do
+          execute :rake, "db:migrate"
+        end
       end
     end
   end
