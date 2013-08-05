@@ -7,6 +7,12 @@ Rails specific tasks for Capistrano v3:
 
 Assumes that `RAILS_ENV` matches stage, tasks are currently early examples
 
+If you need to touch `public/images`, `public/javascripts` and `public/stylesheets` on each deploy:
+
+```ruby
+set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
