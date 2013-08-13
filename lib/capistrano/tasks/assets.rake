@@ -24,6 +24,7 @@ namespace :deploy do
     invoke 'deploy:assets:backup_manifest'
   end
 
+  # FIXME: it removes every asset it has just compiled
   desc 'Cleanup expired assets'
   task :cleanup_assets do
     on roles :web do
@@ -45,7 +46,8 @@ namespace :deploy do
   end
 
   after 'deploy:updated', 'deploy:compile_assets'
-  after 'deploy:updated', 'deploy:cleanup_assets'
+  # NOTE: we don't want to remove assets we've just compiled
+  # after 'deploy:updated', 'deploy:cleanup_assets'
   after 'deploy:updated', 'deploy:normalise_assets'
   after 'deploy:reverted', 'deploy:rollback_assets'
 
