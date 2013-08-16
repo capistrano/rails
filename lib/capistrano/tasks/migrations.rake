@@ -16,6 +16,6 @@ end
 
 namespace :load do
   task :defaults do
-    set :migration_role, :db
+    set :migration_role, fetch(:migration_role, :db)
   end
 end
