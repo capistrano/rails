@@ -11,9 +11,11 @@ namespace :deploy do
   desc 'Normalise asset timestamps'
   task :normalise_assets do
     on roles :web do
-      within release_path do
-        assets = %{public/images public/javascripts public/stylesheets}
-        execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
+      assets = fetch(:normalize_asset_timestamps)
+      if assets
+        within release_path do
+          execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
+        end
       end
     end
   end
