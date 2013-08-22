@@ -68,8 +68,8 @@ namespace :deploy do
       on roles :web do
         within release_path do
           execute :cp,
-            release_path.join('public', 'assets', 'manifest*.json'),
-            release_path.join('assets_manifest_backup.json')
+            release_path.join('public', 'assets', 'manifest*.yml'),
+            release_path.join('assets_manifest_backup.yml')
         end
       end
     end
@@ -77,7 +77,7 @@ namespace :deploy do
     task :restore_manifest do
       on roles :web do
         within release_path do
-          source = release_path.join('assets_manifest_backup.json')
+          source = release_path.join('assets_manifest_backup.yml')
           target = capture(:ls, release_path.join('public', 'assets',
                                                   'manifest*')).strip
           if test "[[ -f #{source} && -f #{target} ]]"
