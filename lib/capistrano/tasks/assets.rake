@@ -11,9 +11,11 @@ namespace :deploy do
   desc 'Normalise asset timestamps'
   task :normalise_assets do
     on roles :web do
-      within fetch(:rails_root) do
-        assets = %{public/images public/javascripts public/stylesheets}
-        execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
+      assets = fetch(:normalize_asset_timestamps)
+      if assets
+        within release_path do
+          execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
+        end
       end
     end
   end
@@ -28,7 +30,7 @@ namespace :deploy do
   desc 'Cleanup expired assets'
   task :cleanup_assets do
     on roles :web do
-      within fetch(:rails_root) do
+      within release_path do
         with rails_env: fetch(:rails_env) do
           execute :rake, "assets:clean"
         end
@@ -54,7 +56,7 @@ namespace :deploy do
   namespace :assets do
     task :precompile do
       on roles :web do
-        within fetch(:rails_root) do
+        within release_path do
           with rails_env: fetch(:rails_env) do
             execute :rake, "assets:precompile"
           end
@@ -64,19 +66,19 @@ namespace :deploy do
 
     task :backup_manifest do
       on roles :web do
-        within fetch(:rails_root) do
+        within release_path do
           execute :cp,
-            fetch(:rails_root).join('public', 'assets', 'manifest*.json'),
-            fetch(:rails_root).join('assets_manifest_backup.json')
+            release_path.join('public', 'assets', 'manifest*.json'),
+            release_path.join('assets_manifest_backup.json')
         end
       end
     end
 
     task :restore_manifest do
       on roles :web do
-        within fetch(:rails_root) do
-          source = fetch(:rails_root).join('assets_manifest_backup.json')
-          target = capture(:ls, fetch(:rails_root).join('public', 'assets',
+        within release_path do
+          source = release_path.join('assets_manifest_backup.json')
+          target = capture(:ls, release_path.join('public', 'assets',
                                                   'manifest*')).strip
           if test "[[ -f #{source} && -f #{target} ]]"
             execute :cp, source, target
