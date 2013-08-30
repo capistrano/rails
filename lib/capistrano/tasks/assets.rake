@@ -31,7 +31,7 @@ namespace :deploy do
   task :cleanup_assets do
     on roles :web do
       within release_path do
-        with rails_env: fetch(:stage) do
+        with rails_env: fetch(:rails_env) do
           execute :rake, "assets:clean"
         end
       end
@@ -57,7 +57,7 @@ namespace :deploy do
     task :precompile do
       on roles :web do
         within release_path do
-          with rails_env: fetch(:stage) do
+          with rails_env: fetch(:rails_env) do
             execute :rake, "assets:precompile"
           end
         end

@@ -5,7 +5,14 @@ Rails specific tasks for Capistrano v3:
   - `cap deploy:migrate`
   - `cap deploy:normalise_assets`
 
-Assumes that `RAILS_ENV` matches stage, tasks are currently early examples
+Tasks are currently early examples.
+
+Some rails specific options.
+
+```ruby
+set :rails_env, 'staging'       # If the environment differs from the stage
+set :migration_role, 'migrator' # Defaults to 'db'
+```
 
 If you need to touch `public/images`, `public/javascripts` and `public/stylesheets` on each deploy:
 
