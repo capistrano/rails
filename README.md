@@ -24,13 +24,22 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano', github: 'capistrano/capistrano', branch: 'v3'
     gem 'capistrano-rails'
 
 And then execute:
 
     $ bundle --binstubs
     $ cap install
+    
+### Using a specific version of Capistrano
+
+You do not need to include the Capistrano gem in your gemfile as it is defined
+as a dependency in the Capistrano::Rails gem. If you do want to include the
+Capistrano gem (because you want to use an specific version), then you need to
+make sure to add `require: false` to it like this:
+
+    gem 'capistrano', github: 'capistrano/capistrano', branch: 'v3', require: false
+    gem 'capistrano-rails'
 
 ## Usage
 
