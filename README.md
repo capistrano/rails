@@ -5,8 +5,6 @@ Rails specific tasks for Capistrano v3:
   - `cap deploy:migrate`
   - `cap deploy:normalise_assets`
 
-Tasks are currently early examples.
-
 Some rails specific options.
 
 ```ruby
