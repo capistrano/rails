@@ -1,3 +1,5 @@
+load File.expand_path("../set_rails_env.rake", __FILE__)
+
 module Capistrano
   class FileNotFound < StandardError
   end
@@ -9,7 +11,7 @@ namespace :deploy do
   end
 
   desc 'Normalise asset timestamps'
-  task :normalise_assets do
+  task :normalise_assets => [:set_rails_env] do
     on roles :web do
       assets = fetch(:normalize_asset_timestamps)
       if assets
@@ -21,7 +23,7 @@ namespace :deploy do
   end
 
   desc 'Compile assets'
-  task :compile_assets do
+  task :compile_assets => [:set_rails_env] do
     invoke 'deploy:assets:precompile'
     invoke 'deploy:assets:backup_manifest'
   end
@@ -39,7 +41,7 @@ namespace :deploy do
   end
 
   desc 'Rollback assets'
-  task :rollback_assets do
+  task :rollback_assets => [:set_rails_env] do
     begin
       invoke 'deploy:assets:restore_manifest'
     rescue Capistrano::FileNotFound
