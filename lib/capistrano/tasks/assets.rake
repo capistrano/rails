@@ -30,7 +30,7 @@ namespace :deploy do
 
   # FIXME: it removes every asset it has just compiled
   desc 'Cleanup expired assets'
-  task :cleanup_assets do
+  task :cleanup_assets => [:set_rails_env] do
     on roles :web do
       within release_path do
         with rails_env: fetch(:rails_env) do
