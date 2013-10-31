@@ -10,7 +10,7 @@ namespace :deploy do
     set :linked_dirs, fetch(:linked_dirs, []).push('public/assets')
   end
 
-  desc 'Normalise asset timestamps'
+  desc 'Normalize asset timestamps'
   task :normalize_assets => [:set_rails_env] do
     on roles :web do
       if assets = fetch(:normalize_asset_timestamps)
