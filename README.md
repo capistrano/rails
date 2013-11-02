@@ -8,7 +8,7 @@ Rails specific tasks for Capistrano v3:
 Some rails specific options.
 
 ```ruby
-set :rails_env, 'staging'       # If the environment differs from the stage
+set :rails_env, 'staging'       # If the environment differs from the stage name
 set :migration_role, 'migrator' # Defaults to 'db'
 ```
 
