@@ -7,14 +7,13 @@ end
 
 namespace :deploy do
   before :starting, :set_shared_assets do
-    set :linked_dirs, (fetch(:linked_dirs) || []).push('public/assets')
+    set :linked_dirs, fetch(:linked_dirs, []).push('public/assets')
   end
 
-  desc 'Normalise asset timestamps'
-  task :normalise_assets => [:set_rails_env] do
+  desc 'Normalize asset timestamps'
+  task :normalize_assets => [:set_rails_env] do
     on roles :web do
-      assets = fetch(:normalize_asset_timestamps)
-      if assets
+      if assets = fetch(:normalize_asset_timestamps)
         within release_path do
           execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
         end
@@ -52,7 +51,7 @@ namespace :deploy do
   after 'deploy:updated', 'deploy:compile_assets'
   # NOTE: we don't want to remove assets we've just compiled
   # after 'deploy:updated', 'deploy:cleanup_assets'
-  after 'deploy:updated', 'deploy:normalise_assets'
+  after 'deploy:updated', 'deploy:normalize_assets'
   after 'deploy:reverted', 'deploy:rollback_assets'
 
   namespace :assets do
@@ -92,7 +91,5 @@ namespace :deploy do
         end
       end
     end
-
   end
-
 end
