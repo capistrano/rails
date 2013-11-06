@@ -25,11 +25,6 @@ Add this line to your application's Gemfile:
     gem 'capistrano',  '~> 3.0.0'
     gem 'capistrano-rails'
 
-And then execute:
-
-    $ bundle --binstubs
-    $ cap install
-
 ## Usage
 
 Require everything (bundler, rails/assets and rails/migrations)
