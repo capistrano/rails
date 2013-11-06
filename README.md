@@ -32,12 +32,15 @@ And then execute:
 
 ## Usage
 
-    # Capfile
+Require everything (bundler, rails/assets and rails/migrations)
 
+    # Capfile
     require 'capistrano/rails'
 
-    # or require just what you need
+Or require just what you need manually:
 
+    # Capfile
+    require 'capistrano/bundler' # Rails needs Bundler, right?
     require 'capistrano/rails/assets'
     require 'capistrano/rails/migrations'
 
