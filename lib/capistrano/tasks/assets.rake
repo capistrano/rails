@@ -71,7 +71,7 @@ namespace :deploy do
         within release_path do
           execute :cp,
             release_path.join('public', 'assets', 'manifest*'),
-            release_path.join('assets_manifest_backup')
+            release_path.join('assets_manifest.backup')
         end
       end
     end
@@ -79,7 +79,7 @@ namespace :deploy do
     task :restore_manifest do
       on roles :web do
         within release_path do
-          source = release_path.join('assets_manifest_backup')
+          source = release_path.join('assets_manifest.backup')
           target = capture(:ls, release_path.join('public', 'assets',
                                                   'manifest*')).strip
           if test "[[ -f #{source} && -f #{target} ]]"
