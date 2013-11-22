@@ -70,7 +70,7 @@ namespace :deploy do
       on roles :web do
         within release_path do
           execute :cp,
-            release_path.join('public', 'assets', 'manifest*'),
+            release_path.join('public', 'assets', '**', 'manifest*'),
             release_path.join('assets_manifest_backup')
         end
       end
