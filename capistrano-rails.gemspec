@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "capistrano-rails"
-  gem.version       = '1.1.0'
+  gem.version       = '1.1.1'
   gem.authors       = ["Tom Clements", "Lee Hambley"]
   gem.email         = ["seenmyfate@gmail.com", "lee.hambley@gmail.com"]
   gem.description   = %q{Rails specific Capistrano tasks}
@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency 'capistrano', '>= 3.0.0'
-  gem.add_dependency 'capistrano-bundler', '>= 1.0.0'
+  gem.add_dependency 'capistrano', '~> 3.1'
+  gem.add_dependency 'capistrano-bundler', '~> 1.0.0'
 
 end
