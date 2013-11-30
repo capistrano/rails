@@ -19,7 +19,7 @@ end
 
 namespace :load do
   task :defaults do
-    set db_create, fetch(:db_create, false)
+    set :db_create, fetch(:db_create, false)
     set :migration_role, fetch(:migration_role, :db)
   end
 end
