@@ -1,3 +1,8 @@
+# future release
+
+* normalized spelling
+  * 'deploy:normalise_assets' is now 'deploy:normalize_assets'
+
 # 1.1.1
 
 * New `asset_roles` options: https://github.com/capistrano/rails/pull/30
