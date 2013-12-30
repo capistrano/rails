@@ -24,8 +24,8 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano',  '~> 3.0.0'
-    gem 'capistrano-rails', '~> 1.1.0'
+    gem 'capistrano',  '~> 3.1'
+    gem 'capistrano-rails', '~> 1.1'
 
 ## Usage
 
