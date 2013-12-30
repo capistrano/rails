@@ -24,8 +24,16 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano',  '~> 3.0.0'
-    gem 'capistrano-rails', '~> 1.1.0'
+    gem 'capistrano-rails', '~> 1.1.0', group: :development
+    
+And then:
+
+```
+bundle
+bundle exec cap install
+```
+
+This will generate a `Capfile` and two stages (staging and production). 
 
 ## Usage
 
