@@ -1,11 +1,8 @@
-# future release
-
-* normalized spelling
-  * 'deploy:normalise_assets' is now 'deploy:normalize_assets'
-
 # 1.1.1
 
 * New `asset_roles` options: https://github.com/capistrano/rails/pull/30
+* normalized task spelling: 'deploy:normalise_assets' is now 'deploy:normalize_assets'
+* depend on capistrano 3.1 to support multiple role arguments
 
 # 1.1.0
 
