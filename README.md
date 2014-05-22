@@ -10,6 +10,7 @@ Some rails specific options.
 ```ruby
 set :rails_env, 'staging'                  # If the environment differs from the stage name
 set :migration_role, 'migrator'            # Defaults to 'db'
+set :conditionally_migrate, true           # Defaults to false
 set :assets_roles, [:web, :app]            # Defaults to [:web]
 set :assets_prefix, 'prepackaged-assets'   # Defaults to 'assets' this should match config.assets.prefix in your rails config/application.rb
 ```
