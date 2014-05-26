@@ -94,8 +94,8 @@ end
 
 namespace :load do
   task :defaults do
-    set :assets_roles, [:web]
-    set :assets_prefix, 'assets'
+    set :assets_roles, fetch(:assets_roles, [:web])
+    set :assets_prefix, fetch(:assets_prefix, 'assets')
     set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
   end
 end
