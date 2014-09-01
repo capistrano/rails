@@ -1,5 +1,9 @@
 # future release
 
+* ready for contributors
+
+# 1.1.2 (Sep 1 2014)
+
 * rails_env is set before deploy (https://github.com/capistrano/rails/pull/66)
 * with `conditionally_migrate` option enabled you can skip `db:migrate` if there were no new migrations (https://github.com/capistrano/rails/pull/71)
 * Allow early overriding of assets_* parameters (https://github.com/capistrano/rails/pull/73)
