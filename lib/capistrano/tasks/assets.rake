@@ -20,8 +20,16 @@ namespace :deploy do
 
   desc 'Compile assets'
   task :compile_assets => [:set_rails_env] do
-    invoke 'deploy:assets:precompile'
-    invoke 'deploy:assets:backup_manifest'
+    on roles(fetch(:assets_roles)) do
+      conditionally_compile = fetch(:conditionally_compile)
+      info '[deploy:compile_assets] Checking changes in /app/assets' if conditionally_compile
+      if conditionally_compile && test("diff -qr #{release_path}/app/assets #{current_path}/app/assets")
+        info '[deploy:compile_assets] Skip `deploy:compile_assets` (nothing changed in app/assets)'
+      else
+        invoke 'deploy:assets:precompile'
+        invoke 'deploy:assets:backup_manifest'
+      end
+    end
   end
 
   # FIXME: it removes every asset it has just compiled
@@ -96,6 +104,7 @@ namespace :load do
   task :defaults do
     set :assets_roles, fetch(:assets_roles, [:web])
     set :assets_prefix, fetch(:assets_prefix, 'assets')
+    set :conditionally_compile, fetch(:conditionally_compile, false)
     set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
   end
 end
