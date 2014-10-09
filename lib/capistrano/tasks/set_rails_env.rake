@@ -4,7 +4,8 @@ namespace :deploy do
   end
 
   task :set_rails_path do
-    set :rails_path, (release_path + fetch(:rails_path) || release_path)
+    set :rails_path, fetch(:rails_path) ? release_path + fetch(:rails_path) : release_path
+    set :current_rails_path, fetch(:rails_path) ? current_path + fetch(:rails_path) : current_path
   end
 end
 

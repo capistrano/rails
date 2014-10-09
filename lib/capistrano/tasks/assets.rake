@@ -56,7 +56,6 @@ namespace :deploy do
       on release_roles(fetch(:assets_roles)) do
         within fetch(:rails_path) do
           with rails_env: fetch(:rails_env) do
-            p fetch(:rails_path)
             execute :rake, "assets:precompile"
           end
         end
