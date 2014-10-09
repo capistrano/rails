@@ -11,7 +11,7 @@ namespace :deploy do
     on release_roles(fetch(:assets_roles)) do
       assets = fetch(:normalize_asset_timestamps)
       if assets
-        within release_path do
+        within fetch(:rails_path) do
           execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
         end
       end
@@ -28,7 +28,7 @@ namespace :deploy do
   desc 'Cleanup expired assets'
   task :cleanup_assets => [:set_rails_env] do
     on release_roles(fetch(:assets_roles)) do
-      within release_path do
+      within fetch(:rails_path) do
         with rails_env: fetch(:rails_env) do
           execute :rake, "assets:clean"
         end
@@ -54,8 +54,9 @@ namespace :deploy do
   namespace :assets do
     task :precompile do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
+        within fetch(:rails_path) do
           with rails_env: fetch(:rails_env) do
+            p fetch(:rails_path)
             execute :rake, "assets:precompile"
           end
         end
@@ -64,12 +65,12 @@ namespace :deploy do
 
     task :backup_manifest do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
-          backup_path = release_path.join('assets_manifest_backup')
+        within fetch(:rails_path) do
+          backup_path = fetch(:rails_path).join('assets_manifest_backup')
 
           execute :mkdir, '-p', backup_path
           execute :cp,
-            release_path.join('public', fetch(:assets_prefix), 'manifest*.*'),
+            fetch(:rails_path).join('public', fetch(:assets_prefix), 'manifest*.*'),
             backup_path
         end
       end
@@ -77,9 +78,9 @@ namespace :deploy do
 
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
-          source = release_path.join('assets_manifest_backup')
-          target = capture(:ls, release_path.join('public', fetch(:assets_prefix),
+        within fetch(:rails_path) do
+          source = fetch(:rails_path).join('assets_manifest_backup')
+          target = capture(:ls, fetch(:rails_path).join('public', fetch(:assets_prefix),
                                                   'manifest*')).strip
           if test "[[ -f #{source} && -f #{target} ]]"
             execute :cp, source, target
