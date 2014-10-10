@@ -13,7 +13,7 @@ set :migration_role, 'migrator'            # Defaults to 'db'
 set :conditionally_migrate, true           # Defaults to false. If true, it's skip migration if files in db/migrate not modified
 set :assets_roles, [:web, :app]            # Defaults to [:web]
 set :assets_prefix, 'prepackaged-assets'   # Defaults to 'assets' this should match config.assets.prefix in your rails config/application.rb
-set :rails_path, 'test/dummy'			   # If the Rails app lives within a sub-directory, e.g. a Rails engine dummy
+set :rails_path, 'test/dummy'			   # Defaults to the repository's root. Can be used if the Rails app lives within a subdirectory, e.g. a Rails engine dummy
 ```
 
 If you need to touch `public/images`, `public/javascripts` and `public/stylesheets` on each deploy:
