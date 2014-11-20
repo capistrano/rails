@@ -1,6 +1,8 @@
 # future release
 
-* ready for contributors
+* 1.1.3
+
+* Fixed no_release behaviour (https://github.com/capistrano/rails/pull/95)
 
 # 1.1.2 (Sep 1 2014)
 
