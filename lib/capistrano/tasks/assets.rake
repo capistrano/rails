@@ -78,8 +78,12 @@ namespace :deploy do
         within release_path do
           source = release_path.join('tmp', 'capistrano_assets_backup', 'manifest*')
           target = release_path.join('public', fetch(:assets_prefix))
+          manifests = capture(:ls, release_path.join('public', fetch(:assets_prefix), 'manifest*')).split
 
           execute :cp, source, target
+          manifests.each do |manifest|
+            info "#{manifest.split('/').last} restored."
+          end
         end
       end
     end
