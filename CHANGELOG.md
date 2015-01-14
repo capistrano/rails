@@ -4,6 +4,7 @@
 
 * Fixed no_release behaviour (https://github.com/capistrano/rails/pull/95)
 * Allow assets manifest backup with folder "manifests" (https://github.com/capistrano/rails/pull/92)
+* Manifest backups moved to tmp/capistrano_assets_backup
 
 # 1.1.2 (Sep 1 2014)
 
