@@ -65,10 +65,10 @@ namespace :deploy do
     task :backup_manifest do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
-          execute :mkdir, release_path.join('tmp', 'capistrano_backup')
+          execute :mkdir, release_path.join('tmp', 'capistrano_assets_backup')
           execute :cp,
             release_path.join('public', fetch(:assets_prefix), 'manifest*'),
-            release_path.join('tmp', 'capistrano_backup')
+            release_path.join('tmp', 'capistrano_assets_backup')
         end
       end
     end
@@ -76,7 +76,7 @@ namespace :deploy do
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
-          source = release_path.join('tmp', 'capistrano_backup', 'manifest*')
+          source = release_path.join('tmp', 'capistrano_assets_backup', 'manifest*')
           target = release_path.join('public', fetch(:assets_prefix))
 
           execute :cp, source, target
