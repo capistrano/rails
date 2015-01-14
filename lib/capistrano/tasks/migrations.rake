@@ -10,7 +10,7 @@ namespace :deploy do
       if conditionally_migrate && test("diff -q #{release_path}/db/migrate #{current_path}/db/migrate")
         info '[deploy:migrate] Skip `deploy:migrate` (nothing changed in db/migrate)'
       else
-        info '[deploy:migrate] Run `rake db:migrate`' if conditionally_migrate
+        info '[deploy:migrate] Run `rake db:migrate`'
         within release_path do
           with rails_env: fetch(:rails_env) do
             execute :rake, "db:migrate"
