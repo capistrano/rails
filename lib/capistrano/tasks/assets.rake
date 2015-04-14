@@ -62,9 +62,18 @@ namespace :deploy do
       end
     end
 
+    def manifest_path(filename)
+      release_path.join('public', fetch(:assets_prefix), filename)
+    end
+
     def manifest_and_backup_paths
       backup_path = release_path.join('assets_manifest_backup')
-      manifest_path = capture(:ls, release_path.join('public', fetch(:assets_prefix), 'manifest*.*')).strip
+      if test(:ls, manifest_path('.sprockets-manifest*'))
+        manifest_path = capture(:ls, manifest_path('.sprockets-manifest*')).strip
+      else
+        manifest_path = capture(:ls, manifest_path('manifest*.*')).strip
+      end
+
       [manifest_path, backup_path]
     end
 
