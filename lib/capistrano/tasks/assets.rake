@@ -66,11 +66,16 @@ namespace :deploy do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
           backup_path = release_path.join('assets_manifest_backup')
-
           execute :mkdir, '-p', backup_path
-          execute :cp,
-            release_path.join('public', fetch(:assets_prefix), 'manifest*.*'),
-            backup_path
+
+          base_path = release_path.join('public', fetch(:assets_prefix)
+          # sprockets 3.0 format
+          new_manifest = capture(:ls, base_path, '.sprockets-manifest-*')).strip
+          if test "[[ -f #{new_manifest} ]]"
+            execute :cp, base_path.join('.sprockets-manifest-*'), backup_path
+          else
+            execute :cp, base_path.join('manifest*.*'), backup_path
+          end
         end
       end
     end
@@ -79,10 +84,16 @@ namespace :deploy do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
           source = release_path.join('assets_manifest_backup')
-          target = capture(:ls, release_path.join('public', fetch(:assets_prefix),
-                                                  'manifest*')).strip
-          if test "[[ -f #{source} && -f #{target} ]]"
-            execute :cp, source, target
+
+          base_path = release_path.join('public', fetch(:assets_prefix)
+          # sprockets 3.0 format
+          new_manifest = capture(:ls, base_path.join('.sprockets-manifest-*')).strip
+          # sprockets 2.x format
+          old_manifest = capture(:ls, base_path.join('manifest*')).strip
+          if test "[[ -f #{source} && -f #{new_manifest} ]]"
+            execute :cp, source, new_manifest
+          elsif test "[[ -f #{source} && -f #{old_manifest} ]]"
+            execute :cp, source, old_manifest
           else
             msg = 'Rails assets manifest file (or backup file) not found.'
             warn msg
