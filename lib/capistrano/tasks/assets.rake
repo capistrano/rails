@@ -66,11 +66,10 @@ namespace :deploy do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
           backup_path = release_path.join('assets_manifest_backup')
+          manifest_path = release_path.join('public', fetch(:assets_prefix), 'manifest*.*')
 
           execute :mkdir, '-p', backup_path
-          execute :cp,
-            release_path.join('public', fetch(:assets_prefix), 'manifest*.*'),
-            backup_path
+          execute :cp, manifest_path, backup_path
         end
       end
     end
@@ -78,11 +77,11 @@ namespace :deploy do
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
-          source = release_path.join('assets_manifest_backup')
-          target = capture(:ls, release_path.join('public', fetch(:assets_prefix),
+          backup_path = release_path.join('assets_manifest_backup')
+          manifest_path = capture(:ls, release_path.join('public', fetch(:assets_prefix),
                                                   'manifest*')).strip
-          if test "[[ -f #{source} && -f #{target} ]]"
-            execute :cp, source, target
+          if test "[[ -f #{backup_path} && -f #{manifest_path} ]]"
+            execute :cp, backup_path, manifest_path
           else
             msg = 'Rails assets manifest file (or backup file) not found.'
             warn msg
