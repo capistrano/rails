@@ -78,9 +78,9 @@ namespace :deploy do
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
-          source = release_path.join('assets_manifest_backup')
           target = capture(:ls, release_path.join('public', fetch(:assets_prefix),
                                                   'manifest*')).strip
+          source = release_path.join('assets_manifest_backup', File.basename(target))
           if test "[[ -f #{source} && -f #{target} ]]"
             execute :cp, source, target
           else
