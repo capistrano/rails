@@ -4,6 +4,7 @@
 
 * Fixed no_release behaviour (https://github.com/capistrano/rails/pull/95)
 * Allow assets manifest backup with folder "manifests" (https://github.com/capistrano/rails/pull/92)
+* Handle Sprocket 3 manifest filename
 
 # 1.1.2 (Sep 1 2014)
 
