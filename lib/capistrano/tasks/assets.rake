@@ -70,7 +70,7 @@ namespace :deploy do
 
           base_path = release_path.join('public', fetch(:assets_prefix))
           # sprockets 3.0 format
-          new_manifest = capture(:ls, base_path, '.sprockets-manifest-*').strip
+          new_manifest = capture(:ls, base_path.join('.sprockets-manifest-*')).strip
           if test "[[ -f #{new_manifest} ]]"
             execute :cp, base_path.join('.sprockets-manifest-*'), backup_path
           else
