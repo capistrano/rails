@@ -41,8 +41,17 @@ Or require just what you need manually:
     require 'capistrano/bundler' # Rails needs Bundler, right?
     require 'capistrano/rails/assets'
     require 'capistrano/rails/migrations'
-    
+
 Please note that any `require` should be placed in `Capfile`, not `config/deploy.rb`.
+
+### Symlinks
+
+You'll probably want to symlink Rails shared files and directories like `log`, `tmp` and `public/uploads`.
+Make sure you enable it by setting `linked_dirs` and `linked_files` options:
+
+    # deploy.rb
+    set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
+    set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 
 ## Contributing
 
