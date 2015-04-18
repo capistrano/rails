@@ -6,13 +6,9 @@ module Capistrano
 end
 
 namespace :deploy do
-  before :starting, :set_shared_assets do
-    set :linked_dirs, (fetch(:linked_dirs) || []).push('public/assets')
-  end
-
-  desc 'Normalise asset timestamps'
-  task :normalise_assets => [:set_rails_env] do
-    on roles :web do
+  desc 'Normalize asset timestamps'
+  task :normalize_assets => [:set_rails_env] do
+    on release_roles(fetch(:assets_roles)) do
       assets = fetch(:normalize_asset_timestamps)
       if assets
         within release_path do
@@ -31,7 +27,7 @@ namespace :deploy do
   # FIXME: it removes every asset it has just compiled
   desc 'Cleanup expired assets'
   task :cleanup_assets => [:set_rails_env] do
-    on roles :web do
+    on release_roles(fetch(:assets_roles)) do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute :rake, "assets:clean"
@@ -52,12 +48,12 @@ namespace :deploy do
   after 'deploy:updated', 'deploy:compile_assets'
   # NOTE: we don't want to remove assets we've just compiled
   # after 'deploy:updated', 'deploy:cleanup_assets'
-  after 'deploy:updated', 'deploy:normalise_assets'
+  after 'deploy:updated', 'deploy:normalize_assets'
   after 'deploy:reverted', 'deploy:rollback_assets'
 
   namespace :assets do
     task :precompile do
-      on roles :web do
+      on release_roles(fetch(:assets_roles)) do
         within release_path do
           with rails_env: fetch(:rails_env) do
             execute :rake, "assets:precompile"
@@ -66,24 +62,39 @@ namespace :deploy do
       end
     end
 
+    def manifest_path(filename)
+      release_path.join('public', fetch(:assets_prefix), filename)
+    end
+
+    def manifest_and_backup_paths
+      backup_path = release_path.join('assets_manifest_backup')
+      if test(:ls, manifest_path('.sprockets-manifest*'))
+        manifest_path = capture(:ls, manifest_path('.sprockets-manifest*')).strip
+      else
+        manifest_path = capture(:ls, manifest_path('manifest*.*')).strip
+      end
+
+      [manifest_path, backup_path]
+    end
+
     task :backup_manifest do
-      on roles :web do
+      on release_roles(fetch(:assets_roles)) do
         within release_path do
-          execute :cp,
-            release_path.join('public', 'assets', 'manifest*'),
-            release_path.join('assets_manifest_backup')
+          manifest_path, backup_path = manifest_and_backup_paths
+
+          execute :mkdir, '-p', backup_path
+          execute :cp, manifest_path, backup_path
         end
       end
     end
 
     task :restore_manifest do
-      on roles :web do
+      on release_roles(fetch(:assets_roles)) do
         within release_path do
-          source = release_path.join('assets_manifest_backup')
-          target = capture(:ls, release_path.join('public', 'assets',
-                                                  'manifest*')).strip
-          if test "[[ -f #{source} && -f #{target} ]]"
-            execute :cp, source, target
+          manifest_path, backup_path = manifest_and_backup_paths
+
+          if test "[[ -f #{backup_path} && -f #{manifest_path} ]]"
+            execute :cp, backup_path, manifest_path
           else
             msg = 'Rails assets manifest file (or backup file) not found.'
             warn msg
@@ -94,5 +105,12 @@ namespace :deploy do
     end
 
   end
+end
 
+namespace :load do
+  task :defaults do
+    set :assets_roles, fetch(:assets_roles, [:web])
+    set :assets_prefix, fetch(:assets_prefix, 'assets')
+    set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
+  end
 end
