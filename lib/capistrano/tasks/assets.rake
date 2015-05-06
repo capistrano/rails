@@ -11,7 +11,7 @@ namespace :deploy do
     on release_roles(fetch(:assets_roles)) do
       assets = fetch(:normalize_asset_timestamps)
       if assets
-        within release_path do
+        within fetch(:rails_path) do
           execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
         end
       end
@@ -28,7 +28,7 @@ namespace :deploy do
   desc 'Cleanup expired assets'
   task :cleanup_assets => [:set_rails_env] do
     on release_roles(fetch(:assets_roles)) do
-      within release_path do
+      within fetch(:rails_path) do
         with rails_env: fetch(:rails_env) do
           execute :rake, "assets:clean"
         end
@@ -54,7 +54,7 @@ namespace :deploy do
   namespace :assets do
     task :precompile do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
+        within fetch(:rails_path) do
           with rails_env: fetch(:rails_env) do
             execute :rake, "assets:precompile"
           end
@@ -64,8 +64,8 @@ namespace :deploy do
 
     task :backup_manifest do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
-          backup_path = release_path.join('assets_manifest_backup')
+        within fetch(:rails_path) do
+          backup_path = fetch(:rails_path).join('assets_manifest_backup')
 
           execute :mkdir, '-p', backup_path
           execute :cp,
@@ -77,9 +77,9 @@ namespace :deploy do
 
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
+        within fetch(:rails_path) do
           target = detect_manifest_path
-          source = release_path.join('assets_manifest_backup', File.basename(target))
+          source = fetch(:rails_path).join('assets_manifest_backup', File.basename(target))
           if test "[[ -f #{source} && -f #{target} ]]"
             execute :cp, source, target
           else
@@ -96,7 +96,7 @@ namespace :deploy do
         .sprockets-manifest*
         manifest*.*
       ).each do |pattern|
-        candidate = release_path.join('public', fetch(:assets_prefix), pattern)
+        candidate = fetch(:rails_path).join('public', fetch(:assets_prefix), pattern)
         return capture(:ls, candidate).strip if test(:ls, candidate)
       end
       msg = 'Rails assets manifest file not found.'

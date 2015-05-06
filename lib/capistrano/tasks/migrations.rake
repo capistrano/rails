@@ -7,11 +7,11 @@ namespace :deploy do
     on primary fetch(:migration_role) do
       conditionally_migrate = fetch(:conditionally_migrate)
       info '[deploy:migrate] Checking changes in /db/migrate' if conditionally_migrate
-      if conditionally_migrate && test("diff -q #{release_path}/db/migrate #{current_path}/db/migrate")
+      if conditionally_migrate && test("diff -q #{fetch(:rails_path)}/db/migrate #{fetch(:current_rails_path)}/db/migrate")
         info '[deploy:migrate] Skip `deploy:migrate` (nothing changed in db/migrate)'
       else
         info '[deploy:migrate] Run `rake db:migrate`'
-        within release_path do
+        within fetch(:rails_path) do
           with rails_env: fetch(:rails_env) do
             execute :rake, "db:migrate"
           end
