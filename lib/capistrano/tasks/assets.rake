@@ -106,10 +106,19 @@ namespace :deploy do
   end
 end
 
+# we can't set linked_dirs in load:defaults,
+# as assets_prefix will always have a default value
+namespace :deploy do
+  task :set_linked_dirs do
+    set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
+  end
+end
+
+after 'deploy:set_rails_env', 'deploy:set_linked_dirs'
+
 namespace :load do
   task :defaults do
     set :assets_roles, fetch(:assets_roles, [:web])
     set :assets_prefix, fetch(:assets_prefix, 'assets')
-    set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
   end
 end
