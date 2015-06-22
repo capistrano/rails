@@ -13,6 +13,7 @@ set :migration_role, 'migrator'            # Defaults to 'db'
 set :conditionally_migrate, true           # Defaults to false. If true, it's skip migration if files in db/migrate not modified
 set :assets_roles, [:web, :app]            # Defaults to [:web]
 set :assets_prefix, 'prepackaged-assets'   # Defaults to 'assets' this should match config.assets.prefix in your rails config/application.rb
+set :multiple_migration_servers, true      # Defaults to false. If true, it would run migrations on all servers under the migration_role
 ```
 
 If you need to touch `public/images`, `public/javascripts` and `public/stylesheets` on each deploy:
