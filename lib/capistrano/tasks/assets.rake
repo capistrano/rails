@@ -21,6 +21,7 @@ namespace :deploy do
   desc 'Compile assets'
   task :compile_assets => [:set_rails_env] do
     invoke 'deploy:assets:precompile'
+    invoke 'deploy:assets:rsync' if rsync_mode?
     invoke 'deploy:assets:backup_manifest'
   end
 
@@ -53,11 +54,29 @@ namespace :deploy do
 
   namespace :assets do
     task :precompile do
-      on release_roles(fetch(:assets_roles)) do
+      roles = rsync_mode? ? fetch(:compile_assets_roles) : fetch(:assets_roles)
+
+      on release_roles(roles) do
         within release_path do
           with rails_env: fetch(:rails_env) do
             execute :rake, "assets:precompile"
           end
+        end
+      end
+    end
+
+    # Copy assets from one primary source machine that compiled them
+    # to other :assets_roles machines that have not. In default
+    # operation, all machines compile their own assets.
+    task :rsync do
+      asset_path = release_path.join('public', fetch(:assets_prefix))
+      rsync_opts = '--archive --acls --xattrs'
+      primary_source_string = "#{rsync_primary_source.hostname}:#{asset_path}/"
+
+      on rsync_destination_roles do
+        within release_path do
+          execute :mkdir, '-p', asset_path
+          execute :rsync, rsync_opts, primary_source_string, asset_path
         end
       end
     end
@@ -103,11 +122,28 @@ namespace :deploy do
       warn msg
       fail Capistrano::FileNotFound, msg
     end
+
+    def rsync_source_roles
+      release_roles(fetch(:compile_assets_roles))
+    end
+
+    def rsync_destination_roles
+      release_roles(fetch(:assets_roles)) - rsync_source_roles
+    end
+
+    def rsync_primary_source
+      rsync_source_roles.first
+    end
+
+    def rsync_mode?
+      rsync_source_roles.any?
+    end
   end
 end
 
 namespace :load do
   task :defaults do
+    set :compile_assets_roles, fetch(:compile_assets_roles, [])
     set :assets_roles, fetch(:assets_roles, [:web])
     set :assets_prefix, fetch(:assets_prefix, 'assets')
     set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
