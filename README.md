@@ -12,6 +12,7 @@ set :rails_env, 'staging'                  # If the environment differs from the
 set :migration_role, 'migrator'            # Defaults to 'db'
 set :conditionally_migrate, true           # Defaults to false. If true, it's skip migration if files in db/migrate not modified
 set :assets_roles, [:web, :app]            # Defaults to [:web]
+set :compile_assets_roles, [:compiler]     # Defaults to [], which means compilation runs on all :assets_roles
 set :assets_prefix, 'prepackaged-assets'   # Defaults to 'assets' this should match config.assets.prefix in your rails config/application.rb
 ```
 
@@ -52,6 +53,27 @@ Make sure you enable it by setting `linked_dirs` and `linked_files` options:
     # deploy.rb
     set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
     set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+
+## Compilation & Distribution of Assets
+
+By default, each machine within `:asset_roles` compiles its own copy of the assets.
+This allows all machines to operate independently and without the need to directly
+access each other.
+
+In some instances, it is desirable to run this compilation on only one machine,
+then have the resultant files distributed to the rest. This can be accomplished
+by assigning a single machine to `:compile_assets_roles`.
+
+```ruby
+set :compile_assets_roles, [ :compiler ]
+
+server 'util01', user: 'deploy', roles: [:util, :compiler]
+```
+
+For this method to work, the other machines in `:asset_roles` must be able to
+directly reach the machine that compiles the assets (in this example, util01)
+using the details provided in the Capistrano configuration. They must also have
+`rsync` available to sync the asset files.
 
 ## Contributing
 
