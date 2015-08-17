@@ -96,7 +96,7 @@ namespace :deploy do
         manifest*.*
       ).each do |pattern|
         candidate = release_path.join('public', fetch(:assets_prefix), pattern)
-        return capture(:ls, candidate).strip if test(:ls, candidate)
+        return capture(:ls, candidate).strip.gsub(/(\r|\n)/,' ') if test(:ls, candidate)
       end
       msg = 'Rails assets manifest file not found.'
       warn msg
