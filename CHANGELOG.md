@@ -1,6 +1,7 @@
 # [master][]
 
 * Your contribution here!
+* rails_assets_groups config option to set RAILS_GROUPS (https://github.com/capistrano/rails/pull/135)
 
 # [1.2.3][] (Mar 4 2017)
 
