@@ -1,3 +1,7 @@
+# HEAD
+
+* Cleanup assets after:updated (#136)
+
 # 1.1.3 (Apr 18 2015)
 
 * Fixed no_release behaviour (https://github.com/capistrano/rails/pull/95)
