@@ -1,6 +1,7 @@
 # HEAD
 
 * Cleanup assets after:updated (#136)
+* Fixed linked_dirs containing default value of assets_prefix (#125)
 
 # 1.1.3 (Apr 18 2015)
 
