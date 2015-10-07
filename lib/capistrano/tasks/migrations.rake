@@ -22,10 +22,3 @@ namespace :deploy do
 
   after 'deploy:updated', 'deploy:migrate'
 end
-
-namespace :load do
-  task :defaults do
-    set :conditionally_migrate, fetch(:conditionally_migrate, false)
-    set :migration_role, fetch(:migration_role, :db)
-  end
-end
