@@ -1,5 +1,6 @@
-# HEAD
+# 1.1.4 (Oct 10 2015)
 
+* Fixing bug with normalize_assets typo #138
 * Cleanup assets after:updated (#136)
 * Fixed linked_dirs containing default value of assets_prefix (#125)
 
