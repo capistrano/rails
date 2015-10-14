@@ -26,10 +26,11 @@ namespace :deploy do
 
   desc 'Cleanup expired assets'
   task :cleanup_assets => [:set_rails_env] do
+    next unless fetch(:keep_assets)
     on release_roles(fetch(:assets_roles)) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "assets:clean"
+          execute :rake, "assets:clean[#{fetch(:keep_assets)}]"
         end
       end
     end

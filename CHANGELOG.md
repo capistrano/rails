@@ -1,3 +1,7 @@
+# master
+
+* Disable `deploy:cleanup_assets` by default due to undesirable behavior in Rails 3. Use `set :keep_assets, 2` to explicitly enable this feature for Rails 4.
+
 # 1.1.4 (Oct 10 2015)
 
 * Fixing bug with normalize_assets typo #138
