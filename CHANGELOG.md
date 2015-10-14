@@ -1,3 +1,7 @@
+# 1.1.5 (Oct 14 2015)
+
+* Do not cleanup assets by default (#142)
+
 # 1.1.4 (Oct 10 2015)
 
 * Fixing bug with normalize_assets typo #138

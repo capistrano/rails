@@ -58,6 +58,16 @@ set :assets_prefix, 'prepackaged-assets'
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 ```
 
+### Cleanup
+
+To cleanup assets after compilation (which is a good idea on Rails 4), you can enable `rake assets:cleanup` on every deploy:
+
+```ruby
+after 'deploy:updated', 'deploy:cleanup_assets'
+```
+
+Concider not using this task on Rails 3, because the behaviour under Rails 3 [is different](https://github.com/capistrano/rails/issues/142).
+
 ### Symlinks
 
 You'll probably want to symlink Rails shared files and directories like `log`, `tmp` and `public/uploads`.
