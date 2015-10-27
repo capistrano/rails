@@ -40,6 +40,10 @@ You can tweak some Rails-specific options in `config/deploy.rb`:
 # If the environment differs from the stage name
 set :rails_env, 'staging'
 
+# Defaults to 'rake'
+# If the rake executable differs from 'rake'
+set :rake_bin, 'pitch_fork'
+
 # Defaults to 'db'
 set :migration_role, 'migrator'
 

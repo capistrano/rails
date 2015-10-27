@@ -13,7 +13,7 @@ namespace :deploy do
         info '[deploy:migrate] Run `rake db:migrate`'
         within release_path do
           with rails_env: fetch(:rails_env) do
-            execute :rake, "db:migrate"
+            execute fetch(:rake_bin), "db:migrate"
           end
         end
       end
@@ -27,5 +27,6 @@ namespace :load do
   task :defaults do
     set :conditionally_migrate, fetch(:conditionally_migrate, false)
     set :migration_role, fetch(:migration_role, :db)
+    set :rake_bin, fetch(:rake_bin, :rake)
   end
 end

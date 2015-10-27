@@ -30,7 +30,7 @@ namespace :deploy do
     on release_roles(fetch(:assets_roles)) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "assets:clean[#{fetch(:keep_assets)}]"
+          execute fetch(:rake_bin), "assets:clean[#{fetch(:keep_assets)}]"
         end
       end
     end
@@ -55,7 +55,7 @@ namespace :deploy do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
           with rails_env: fetch(:rails_env) do
-            execute :rake, "assets:precompile"
+            execute fetch(:rake_bin), "assets:precompile"
           end
         end
       end
@@ -119,5 +119,6 @@ namespace :load do
   task :defaults do
     set :assets_roles, fetch(:assets_roles, [:web])
     set :assets_prefix, fetch(:assets_prefix, 'assets')
+    set :rake_bin, fetch(:rake_bin, :rake)
   end
 end
