@@ -1,5 +1,3 @@
-load File.expand_path("../set_rails_env.rake", __FILE__)
-
 module Capistrano
   class FileNotFound < StandardError
   end
