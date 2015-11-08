@@ -16,6 +16,7 @@ namespace :deploy do
     end
   end
 
+  desc 'Runs rake db:migrate'
   task migrating: [:set_rails_env] do
     on primary fetch(:migration_role) do
       within release_path do
