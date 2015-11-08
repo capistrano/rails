@@ -1,3 +1,7 @@
+# master
+
+* Split `deploy:migrate` to allow for finer hook-control
+
 # 1.1.5 (Oct 15 2015)
 
 * Disable `deploy:cleanup_assets` by default due to undesirable behavior in Rails 3. Use `set :keep_assets, 2` to explicitly enable this feature for Rails 4.
