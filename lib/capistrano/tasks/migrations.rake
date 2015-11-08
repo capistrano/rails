@@ -11,10 +11,16 @@ namespace :deploy do
         info '[deploy:migrate] Skip `deploy:migrate` (nothing changed in db/migrate)'
       else
         info '[deploy:migrate] Run `rake db:migrate`'
-        within release_path do
-          with rails_env: fetch(:rails_env) do
-            execute :rake, "db:migrate"
-          end
+        invoke :'deploy:migrating'
+      end
+    end
+  end
+
+  task migrating: [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:migrate'
         end
       end
     end
