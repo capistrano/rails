@@ -54,6 +54,10 @@ set :assets_roles, [:web, :app]
 # This should match config.assets.prefix in your rails config/application.rb
 set :assets_prefix, 'prepackaged-assets'
 
+# Defaults to true
+# Toggle asset-folder symlink creation
+set :link_assets, false
+
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
