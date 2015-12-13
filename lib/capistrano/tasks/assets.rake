@@ -24,13 +24,24 @@ namespace :deploy do
     invoke 'deploy:assets:backup_manifest'
   end
 
-  # FIXME: it removes every asset it has just compiled
   desc 'Cleanup expired assets'
   task :cleanup_assets => [:set_rails_env] do
+    next unless fetch(:keep_assets)
     on release_roles(fetch(:assets_roles)) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, "assets:clean"
+          execute :rake, "'assets:clean[#{fetch(:keep_assets)}]'"
+        end
+      end
+    end
+  end
+
+  desc 'Clobber assets'
+  task :clobber_assets => [:set_rails_env] do
+    on release_roles(fetch(:assets_roles)) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "assets:clobber"
         end
       end
     end
@@ -46,8 +57,7 @@ namespace :deploy do
   end
 
   after 'deploy:updated', 'deploy:compile_assets'
-  # NOTE: we don't want to remove assets we've just compiled
-  # after 'deploy:updated', 'deploy:cleanup_assets'
+  after 'deploy:updated', 'deploy:cleanup_assets'
   after 'deploy:updated', 'deploy:normalize_assets'
   after 'deploy:reverted', 'deploy:rollback_assets'
 
@@ -106,10 +116,19 @@ namespace :deploy do
   end
 end
 
+# we can't set linked_dirs in load:defaults,
+# as assets_prefix will always have a default value
+namespace :deploy do
+  task :set_linked_dirs do
+    set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
+  end
+end
+
+after 'deploy:set_rails_env', 'deploy:set_linked_dirs'
+
 namespace :load do
   task :defaults do
     set :assets_roles, fetch(:assets_roles, [:web])
     set :assets_prefix, fetch(:assets_prefix, 'assets')
-    set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
   end
 end
