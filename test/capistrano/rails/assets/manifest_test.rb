@@ -64,6 +64,48 @@ class Capistrano::Rails::Assets::ManifestTest < Minitest::Test
     end
   end
 
+  def test_backup_multiple_manifests
+    scenario("sprockets_multiple_manifests") do |manifest, dsl|
+      manifest.backup(@ssh)
+
+      assert_file_exists(
+        dsl.release_path.join(
+          "assets_manifest_backup",
+          ".sprockets-manifest-9b1cb4b13648eb78ff92d64294703663.json"
+        )
+      )
+      assert_file_exists(
+        dsl.release_path.join(
+          "assets_manifest_backup",
+          "manifest-9b1cb4b13648eb78ff92d64294703663.json"
+        )
+      )
+    end
+  end
+
+  def test_restore_multiple_manifests
+    scenario("sprockets_multiple_backups") do |manifest, dsl|
+      manifest.restore(@ssh)
+
+      assert_file_contents(
+        "Restored!",
+        dsl.release_path.join(
+          "public",
+          "assets",
+          ".sprockets-manifest-9b1cb4b13648eb78ff92d64294703663.json"
+        )
+      )
+      assert_file_contents(
+        "Restored!",
+        dsl.release_path.join(
+          "public",
+          "assets",
+          "manifest-9b1cb4b13648eb78ff92d64294703663.json"
+        )
+      )
+    end
+  end
+
   def test_backup_with_custom_settings
     scenario("custom_settings") do |manifest, dsl|
       dsl.set(:assets_prefix, "static")
