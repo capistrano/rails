@@ -62,9 +62,9 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 # set this to the number of versions to keep
 set :keep_assets, 2
 
-# Defaults to false (only one migration server)
+# Defaults to primary (only one migration server)
 # If you would like to run the migrations on all servers under the migration_role
-set :multiple_migration_servers, true
+set :migration_servers, -> { roles(fetch(:migration_role) }
 ```
 
 ### Symlinks
