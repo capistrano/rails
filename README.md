@@ -14,6 +14,18 @@ gem 'capistrano', '~> 3.1'
 gem 'capistrano-rails', '~> 1.1'
 ```
 
+Run the following command to install the gems:
+
+```
+bundle install
+```
+
+Then run the generator to create a basic set of configuration files:
+
+```
+bundle exec cap install
+```
+
 ## Usage
 
 Require everything (`bundler`, `rails/assets` and `rails/migrations`):
