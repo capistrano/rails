@@ -3,6 +3,7 @@
 * Add `rake assets:clobber` task from Rails (#149)
 * Make `assets:clean` capable with zsh (#150)
 * Split `deploy:migrate` to allow for finer hook-control (#148)
+* Fix for parsing ls output in detect_manifest_path (#133)
 
 # 1.1.5 (Oct 15 2015)
 
