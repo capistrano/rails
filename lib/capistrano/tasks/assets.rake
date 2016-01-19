@@ -11,7 +11,7 @@ namespace :deploy do
     on release_roles(fetch(:assets_roles)) do
       assets = fetch(:normalize_asset_timestamps)
       if assets
-        within release_path do
+        within fetch(:assets_root) do
           execute :find, "#{assets} -exec touch -t #{asset_timestamp} {} ';'; true"
         end
       end
@@ -28,7 +28,7 @@ namespace :deploy do
   task :cleanup_assets => [:set_rails_env] do
     next unless fetch(:keep_assets)
     on release_roles(fetch(:assets_roles)) do
-      within release_path do
+      within fetch(:assets_root) do
         with rails_env: fetch(:rails_env) do
           execute :rake, "'assets:clean[#{fetch(:keep_assets)}]'"
         end
@@ -39,7 +39,7 @@ namespace :deploy do
   desc 'Clobber assets'
   task :clobber_assets => [:set_rails_env] do
     on release_roles(fetch(:assets_roles)) do
-      within release_path do
+      within fetch(:assets_root) do
         with rails_env: fetch(:rails_env) do
           execute :rake, "assets:clobber"
         end
@@ -64,7 +64,7 @@ namespace :deploy do
   namespace :assets do
     task :precompile do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
+        within fetch(:assets_root) do
           with rails_env: fetch(:rails_env) do
             execute :rake, "assets:precompile"
           end
@@ -74,8 +74,8 @@ namespace :deploy do
 
     task :backup_manifest do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
-          backup_path = release_path.join('assets_manifest_backup')
+        within fetch(:assets_root) do
+          backup_path = fetch(:assets_root).join('assets_manifest_backup')
 
           execute :mkdir, '-p', backup_path
           execute :cp,
@@ -87,9 +87,9 @@ namespace :deploy do
 
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
-        within release_path do
+        within fetch(:assets_root) do
           target = detect_manifest_path
-          source = release_path.join('assets_manifest_backup', File.basename(target))
+          source = fetch(:assets_root).join('assets_manifest_backup', File.basename(target))
           if test "[[ -f #{source} && -f #{target} ]]"
             execute :cp, source, target
           else
@@ -106,7 +106,7 @@ namespace :deploy do
         .sprockets-manifest*
         manifest*.*
       ).each do |pattern|
-        candidate = release_path.join('public', fetch(:assets_prefix), pattern)
+        candidate = fetch(:assets_root).join('public', fetch(:assets_prefix), pattern)
         return capture(:ls, candidate).strip if test(:ls, candidate)
       end
       msg = 'Rails assets manifest file not found.'
@@ -130,5 +130,6 @@ namespace :load do
   task :defaults do
     set :assets_roles, fetch(:assets_roles, [:web])
     set :assets_prefix, fetch(:assets_prefix, 'assets')
+    set :assets_root, fetch(:assets_root, release_path)
   end
 end

@@ -56,6 +56,10 @@ set :assets_roles, [:web, :app]
 # This should match config.assets.prefix in your rails config/application.rb
 set :assets_prefix, 'prepackaged-assets'
 
+# Defaults to release_path
+# Use this option when your rails project's root path is a subdirectory of the release_path
+set :assets_root, -> { release_path.join('custom', 'rails_root_path') }
+
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
