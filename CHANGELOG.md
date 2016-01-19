@@ -1,4 +1,4 @@
-# edge
+# 1.1.6 (Jan 19 2016)
 
 * Add `rake assets:clobber` task from Rails (#149)
 * Make `assets:clean` capable with zsh (#150)
