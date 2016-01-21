@@ -106,8 +106,8 @@ namespace :deploy do
         .sprockets-manifest*
         manifest*.*
       ).each do |pattern|
-        candidate = fetch(:assets_root).join('public', fetch(:assets_prefix), pattern)
-        return capture(:ls, candidate).strip if test(:ls, candidate)
+        candidate = release_path.join('public', fetch(:assets_prefix), pattern)
+        return capture(:ls, candidate).strip.gsub(/(\r|\n)/,' ') if test(:ls, candidate)
       end
       msg = 'Rails assets manifest file not found.'
       warn msg
