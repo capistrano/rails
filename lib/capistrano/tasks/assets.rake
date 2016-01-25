@@ -120,7 +120,9 @@ end
 # as assets_prefix will always have a default value
 namespace :deploy do
   task :set_linked_dirs do
-    set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
+    if fetch :link_assets, true
+      set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}")
+    end
   end
 end
 
