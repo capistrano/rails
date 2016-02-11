@@ -1,3 +1,7 @@
+# master
+
+* call `Array#uniq` in `deploy:set_linked_dirs` task to remove duplicated :linked_dirs
+
 # 1.1.6 (Jan 19 2016)
 
 * Add `rake assets:clobber` task from Rails (#149)
