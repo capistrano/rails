@@ -4,7 +4,7 @@ namespace :deploy do
 
   desc 'Runs rake db:migrate if migrations are set'
   task :migrate => [:set_rails_env] do
-    on primary fetch(:migration_role) do
+    on fetch(:migration_servers) do
       conditionally_migrate = fetch(:conditionally_migrate)
       info '[deploy:migrate] Checking changes in /db/migrate' if conditionally_migrate
       if conditionally_migrate && test("diff -q #{release_path}/db/migrate #{current_path}/db/migrate")
@@ -34,5 +34,6 @@ namespace :load do
   task :defaults do
     set :conditionally_migrate, fetch(:conditionally_migrate, false)
     set :migration_role, fetch(:migration_role, :db)
+    set :migration_servers, fetch(:migration_servers, -> { primary(fetch(:migration_role)) })
   end
 end
