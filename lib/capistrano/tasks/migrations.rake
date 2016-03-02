@@ -13,7 +13,7 @@ namespace :deploy do
         info '[deploy:migrate] Run `rake db:migrate`'
         invoke :'deploy:migrating'
       end
-    end unless fetch(:skip_migrations_on_deploy)
+    end if fetch(:migrate_on_deploy)
   end
 
   desc 'Runs rake db:migrate'
@@ -34,6 +34,6 @@ namespace :load do
   task :defaults do
     set :conditionally_migrate, fetch(:conditionally_migrate, false)
     set :migration_role, fetch(:migration_role, :db)
-    set :skip_migrations_on_deploy, fetch(:skip_migrations_on_deploy, false)
+    set :migrate_on_deploy, fetch(:migrate_on_deploy, true)
   end
 end
