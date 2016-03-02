@@ -61,6 +61,10 @@ set :migration_role, 'migrator'
 # Skip migration if files in db/migrate were not modified
 set :conditionally_migrate, true
 
+# Defauls to false
+# Skip migrations to be run after the deploy:updated task
+set :skip_migrations_on_deploy, true
+
 # Defaults to [:web]
 set :assets_roles, [:web, :app]
 
