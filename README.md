@@ -75,6 +75,10 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 # If you use Rails 4+ and you'd like to clean up old assets after each deploy,
 # set this to the number of versions to keep
 set :keep_assets, 2
+
+# Defaults to the primary :db server
+set :migration_role, :db
+set :migration_servers, -> { primary(fetch(:migration_role)) }
 ```
 
 ### Symlinks
