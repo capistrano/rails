@@ -10,8 +10,22 @@ Rails specific tasks for Capistrano v3:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano', '~> 3.1'
-gem 'capistrano-rails', '~> 1.1'
+group :development do
+  gem 'capistrano', '~> 3.1'
+  gem 'capistrano-rails', '~> 1.1'
+end
+```
+
+Run the following command to install the gems:
+
+```
+bundle install
+```
+
+Then run the generator to create a basic set of configuration files:
+
+```
+bundle exec cap install
 ```
 
 ## Usage
@@ -56,6 +70,15 @@ set :assets_prefix, 'prepackaged-assets'
 
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
+
+# Defaults to nil (no asset cleanup is performed)
+# If you use Rails 4+ and you'd like to clean up old assets after each deploy,
+# set this to the number of versions to keep
+set :keep_assets, 2
+
+# Defaults to the primary :db server
+set :migration_role, :db
+set :migration_servers, -> { primary(fetch(:migration_role)) }
 ```
 
 ### Symlinks
