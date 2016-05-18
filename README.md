@@ -69,7 +69,7 @@ set :assets_roles, [:web, :app]
 set :assets_prefix, 'prepackaged-assets'
 
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
-set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
+set :normalize_asset_timestamps, %w{public/images public/javascripts public/stylesheets}
 
 # Defaults to nil (no asset cleanup is performed)
 # If you use Rails 4+ and you'd like to clean up old assets after each deploy,
