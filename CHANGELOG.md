@@ -1,5 +1,6 @@
 # master
 
+* Fix default values not being set if capistrano/migrations required after capistrano/setup
 * call `Array#uniq` in `deploy:set_linked_dirs` task to remove duplicated :linked_dirs
 * Add `migration_servers` configuration (#168)
 
