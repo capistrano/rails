@@ -1,5 +1,7 @@
 # master
 
+# 1.1.7 (Jun 10 2016)
+
 * call `Array#uniq` in `deploy:set_linked_dirs` task to remove duplicated :linked_dirs
 * Add `migration_servers` configuration (#168)
 
