@@ -54,8 +54,11 @@ You can tweak some Rails-specific options in `config/deploy.rb`:
 # If the environment differs from the stage name
 set :rails_env, 'staging'
 
-# Defaults to 'db'
-set :migration_role, 'migrator'
+# Defaults to :db role
+set :migration_role, :db
+
+# Defaults to the primary :db server
+set :migration_servers, -> { primary(fetch(:migration_role)) }
 
 # Defaults to false
 # Skip migration if files in db/migrate were not modified
@@ -75,10 +78,6 @@ set :normalize_asset_timestamps, %w{public/images public/javascripts public/styl
 # If you use Rails 4+ and you'd like to clean up old assets after each deploy,
 # set this to the number of versions to keep
 set :keep_assets, 2
-
-# Defaults to the primary :db server
-set :migration_role, :db
-set :migration_servers, -> { primary(fetch(:migration_role)) }
 ```
 
 ### Symlinks
