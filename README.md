@@ -91,6 +91,20 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 ```
 
+### Recommendations
+
+While migrations looks like a concern of the database layer, Rails migrations
+are strictly related to the framework. It's recommended so, to set the role to
+`:app` instead of `:db` like:
+
+```ruby
+set :migration_role, :app
+set :migration_servers, -> { release_roles(fetch(:migration_role)) }
+```
+
+The advantage is you won't need to deploy your application to your database
+server, and overall a better separation of concerns.
+
 ## Contributing
 
 1. Fork it
