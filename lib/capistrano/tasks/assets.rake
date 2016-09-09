@@ -9,8 +9,7 @@ namespace :deploy do
   desc 'Normalize asset timestamps'
   task :normalize_assets => [:set_rails_env] do
     on release_roles(fetch(:assets_roles)) do
-      assets = fetch(:normalize_asset_timestamps, [])
-      assets = [assets] unless assets.respond_to?(:any?)
+      assets = Array(fetch(:normalize_asset_timestamps, []))
       if assets.any?
         within release_path do
           execute :find, "#{assets.join(' ')} -exec touch -t #{asset_timestamp} {} ';'; true"
