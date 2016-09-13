@@ -1,7 +1,10 @@
 # master
 
-* Handle arrays passed into `normalize_asset_timestamps` correctly (#184)
 * Your contribution here!
+
+# 1.1.8 (Sep 13 2016)
+
+* Handle arrays passed into `normalize_asset_timestamps` correctly (#184)
 
 # 1.1.7 (Jun 10 2016)
 
