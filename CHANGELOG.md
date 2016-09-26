@@ -1,6 +1,7 @@
 # master
 
 * Your contribution here!
+* Diff entire db directory when determining if migrations are needed
 
 # 1.1.7 (Jun 10 2016)
 
