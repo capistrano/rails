@@ -1,6 +1,9 @@
-# master
+# [master][]
 
 * Your contribution here!
+
+# [1.2.0][] (Oct 25 2016)
+
 * Diff entire db directory when determining if migrations are needed
 
 # 1.1.8 (Sep 13 2016)
@@ -56,3 +59,6 @@
 # 1.0.0
 
 Initial release
+
+[master]: https://github.com/capistrano/rails/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/capistrano/rails/compare/v1.1.8...v1.2.0

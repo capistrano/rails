@@ -12,7 +12,7 @@ Add these lines to your application's Gemfile:
 ```ruby
 group :development do
   gem 'capistrano', '~> 3.6'
-  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rails', '~> 1.2'
 end
 ```
 
