@@ -1,5 +1,6 @@
 # [master][]
 
+* Diff db directory recursively
 * Your contribution here!
 
 # [1.2.0][] (Oct 25 2016)
