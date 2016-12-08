@@ -1,6 +1,7 @@
 # [master][]
 
 * Diff db directory recursively
+* Avoid warning while running migrations on multiple servers (#189)
 * Your contribution here!
 
 # [1.2.0][] (Oct 25 2016)
