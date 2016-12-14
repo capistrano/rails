@@ -11,7 +11,7 @@ namespace :deploy do
         info '[deploy:migrate] Skip `deploy:migrate` (nothing changed in db)'
       else
         info '[deploy:migrate] Run `rake db:migrate`'
-        invoke :'deploy:migrating'
+        invoke :'deploy:migrating' unless Rake::Task[:'deploy:migrating'].already_invoked
       end
     end
   end
