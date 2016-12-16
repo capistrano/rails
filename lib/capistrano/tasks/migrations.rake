@@ -7,7 +7,7 @@ namespace :deploy do
     on fetch(:migration_servers) do
       conditionally_migrate = fetch(:conditionally_migrate)
       info '[deploy:migrate] Checking changes in db' if conditionally_migrate
-      if conditionally_migrate && test("diff -qr #{release_path}/db #{current_path}/db")
+      if conditionally_migrate && test(:diff, "-qr #{release_path}/db #{current_path}/db")
         info '[deploy:migrate] Skip `deploy:migrate` (nothing changed in db)'
       else
         info '[deploy:migrate] Run `rake db:migrate`'
