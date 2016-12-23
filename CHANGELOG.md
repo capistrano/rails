@@ -1,8 +1,11 @@
 # [master][]
 
+* Your contribution here!
+
+# [1.2.1][] (Dec 23 2016)
+
 * Diff db directory recursively
 * Avoid warning while running migrations on multiple servers (#189)
-* Your contribution here!
 
 # [1.2.0][] (Oct 25 2016)
 
@@ -62,5 +65,6 @@
 
 Initial release
 
-[master]: https://github.com/capistrano/rails/compare/v1.2.0...HEAD
+[master]: https://github.com/capistrano/rails/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/capistrano/rails/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/capistrano/rails/compare/v1.1.8...v1.2.0
