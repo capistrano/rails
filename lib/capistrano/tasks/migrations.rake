@@ -11,7 +11,8 @@ namespace :deploy do
         info '[deploy:migrate] Skip `deploy:migrate` (nothing changed in db)'
       else
         info '[deploy:migrate] Run `rake db:migrate`'
-        invoke :'deploy:migrating' unless Rake::Task[:'deploy:migrating'].already_invoked
+        # NOTE: We access instance variable since the accessor was only added recently. Once capistrano-rails depends on rake 11+, we can revert the following line
+        invoke :'deploy:migrating' unless Rake::Task[:'deploy:migrating'].instance_variable_get(:@already_invoked)
       end
     end
   end

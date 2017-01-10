@@ -1,6 +1,6 @@
 # [master][]
 
-* Your contribution here!
+* Restored compatibility with older versions of Rake (< 11.0.0), introduced in previous change. (@toupeira)
 
 # [1.2.1][] (Dec 23 2016)
 
