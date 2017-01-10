@@ -1,5 +1,9 @@
 # [master][]
 
+* Your contribution here!
+
+# [1.2.2][] (Jan 10 2017)
+
 * Restored compatibility with older versions of Rake (< 11.0.0), introduced in previous change. (@toupeira)
 
 # [1.2.1][] (Dec 23 2016)
@@ -65,6 +69,7 @@
 
 Initial release
 
-[master]: https://github.com/capistrano/rails/compare/v1.2.1...HEAD
+[master]: https://github.com/capistrano/rails/compare/v1.2.2...HEAD
+[1.2.2]: https://github.com/capistrano/rails/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/capistrano/rails/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/capistrano/rails/compare/v1.1.8...v1.2.0
