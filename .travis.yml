@@ -1,0 +1,6 @@
+sudo: false
+language: ruby
+rvm:
+  - 2.3.3
+before_install: gem install bundler -v '~> 1.14' --conservative
+before_script: bundle exec danger

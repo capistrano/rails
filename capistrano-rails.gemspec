@@ -18,4 +18,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'capistrano', '~> 3.1'
   gem.add_dependency 'capistrano-bundler', '~> 1.1'
 
+  gem.add_development_dependency 'danger'
 end
