@@ -1,6 +1,7 @@
 # [master][]
 
 * Your contribution here!
+* [#200](https://github.com/capistrano/rails/pull/200): Don't link public/assets if public is already linked - [@mattbrictson](https://github.com/mattbrictson)
 
 # [1.2.2][] (Jan 10 2017)
 

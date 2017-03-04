@@ -120,7 +120,11 @@ end
 # as assets_prefix will always have a default value
 namespace :deploy do
   task :set_linked_dirs do
-    set :linked_dirs, fetch(:linked_dirs, []).push("public/#{fetch(:assets_prefix)}").uniq
+    linked_dirs = fetch(:linked_dirs, [])
+    unless linked_dirs.include?('public')
+      linked_dirs << "public/#{fetch(:assets_prefix)}"
+      set :linked_dirs, linked_dirs.uniq
+    end
   end
 end
 
