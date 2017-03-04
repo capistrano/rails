@@ -1,6 +1,9 @@
 # [master][]
 
 * Your contribution here!
+
+# [1.2.3][] (Mar 4 2017)
+
 * [#200](https://github.com/capistrano/rails/pull/200): Don't link public/assets if public is already linked - [@mattbrictson](https://github.com/mattbrictson)
 
 # [1.2.2][] (Jan 10 2017)
@@ -70,7 +73,8 @@
 
 Initial release
 
-[master]: https://github.com/capistrano/rails/compare/v1.2.2...HEAD
+[master]: https://github.com/capistrano/rails/compare/v1.2.3...HEAD
+[1.2.3]: https://github.com/capistrano/rails/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/capistrano/rails/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/capistrano/rails/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/capistrano/rails/compare/v1.1.8...v1.2.0
