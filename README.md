@@ -71,6 +71,9 @@ set :assets_roles, [:web, :app]
 # This should match config.assets.prefix in your rails config/application.rb
 set :assets_prefix, 'prepackaged-assets'
 
+# RAILS_GROUPS env value for the assets:precompile task. Default to nil.
+set :rails_assets_groups, :assets
+
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
 set :normalize_asset_timestamps, %w{public/images public/javascripts public/stylesheets}
 
