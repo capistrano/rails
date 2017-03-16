@@ -1,5 +1,3 @@
-load File.expand_path("../set_rails_env.rake", __FILE__)
-
 namespace :deploy do
 
   desc 'Runs rake db:migrate if migrations are set'
