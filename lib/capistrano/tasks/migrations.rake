@@ -28,6 +28,19 @@ namespace :deploy do
     end
   end
 
+  desc 'Runs rake db:create'
+  task :db_create => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      info '[deploy:db_create] Run `rake db:create`'
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "db:create"
+        end
+      end
+    end
+  end
+
+  after 'deploy:updated', 'deploy:db_create'
   after 'deploy:updated', 'deploy:migrate'
 end
 
