@@ -11,6 +11,8 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Rails specific Capistrano tasks}
   gem.homepage      = "https://github.com/capistrano/rails"
 
+  gem.licenses      = ["MIT"]
+
   gem.files         = `git ls-files`.split($/)
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
