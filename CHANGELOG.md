@@ -1,6 +1,7 @@
 # [master][]
 
 * Your contribution here!
+* [#209](https://github.com/capistrano/rails/pull/209): Run any rake task on remote - [@stoivo](https://github.com/stoivo)
 
 # [1.3.0][] (Jun 9 2017)
 
