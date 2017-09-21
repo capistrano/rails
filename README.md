@@ -90,9 +90,11 @@ Make sure you enable it by setting `linked_dirs` and `linked_files` options:
 
 ```ruby
 # deploy.rb
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads'
+append :linked_files, 'config/database.yml', 'config/secrets.yml'
 ```
+
+In capistrano < 3.5, before `append` was introduced, you can use `fetch` and `push` to get the same result.
 
 ### Recommendations
 
