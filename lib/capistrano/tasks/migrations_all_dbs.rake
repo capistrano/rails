@@ -1,6 +1,13 @@
 load File.expand_path("../set_rails_env.rake", __FILE__)
+require 'yaml'
 
 namespace :deploy do
+
+  def get_all_env
+    yml_file = './config/databases.yml'
+    abort "Create #{yml_file}" unless File.exists? yml_file
+    envs = YAML.load_file yml_file
+  end
 
   desc 'Runs rake db:migrate if migrations are set'
   task :migrate_all_dbs => [:set_rails_env] do
@@ -22,7 +29,8 @@ namespace :deploy do
     on fetch(:migration_servers) do
       within release_path do
         fetch(:all_rails_envs).each do |rails_env|
-          with rails_env: rails_env do
+          with rails_env: rails_env.first do
+            puts "Migration for #{rails_env.first} is runing"
             execute :rake, 'db:migrate'
           end
         end
@@ -38,8 +46,6 @@ namespace :load do
     set :conditionally_migrate,           fetch(:conditionally_migrate, false)
     set :migration_role,                  fetch(:migration_role, :db)
     set :migration_servers, -> { primary( fetch(:migration_role)) }
-
-    # load all all_rails_envs
-    set :all_rails_envs, ['pipo', 'pipo2']
+    set :all_rails_envs, get_all_env
   end
 end
