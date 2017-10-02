@@ -30,8 +30,8 @@ namespace :deploy do
     on fetch(:migration_servers) do
       within release_path do
         fetch(:all_rails_envs).each do |rails_env|
-          puts "Migration for #{rails_env.first} is runing"
           with rails_env: rails_env.first do
+            puts "Migration for #{rails_env.first} is runing"
             execute :rake, 'db:migrate'
           end
         end
