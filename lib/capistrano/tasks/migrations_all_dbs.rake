@@ -5,7 +5,6 @@ namespace :deploy do
 
   def get_all_env
     yml_file = './config/databases.yml'
-    key = "mysql_#{fetch :stage}"
     abort "Create #{yml_file}" unless File.exists? yml_file
     envs = YAML.load_file yml_file
   end

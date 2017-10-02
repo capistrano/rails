@@ -3,8 +3,8 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
-  gem.name          = "capistrano-migration-all-dbs"
-  gem.version       = '1.3.0'
+  gem.name          = "capistrano-rails"
+  gem.version       = '1.3.0-quimeo'
   gem.authors       = ["Tom Clements", "Lee Hambley", "Kir Shatrov"]
   gem.email         = ["seenmyfate@gmail.com", "lee.hambley@gmail.com", "shatrov@me.com"]
   gem.description   = %q{Rails specific Capistrano tasks}
