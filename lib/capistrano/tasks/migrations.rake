@@ -29,6 +29,17 @@ namespace :deploy do
   end
 
   after 'deploy:updated', 'deploy:migrate'
+
+  desc 'Runs any rake task, cap deploy:rake task=db:rollback'
+  task rake: [:set_rails_env] do
+    on fetch(:migration_servers) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, ENV['task']
+        end
+      end
+    end
+  end
 end
 
 namespace :load do
