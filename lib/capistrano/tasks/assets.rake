@@ -102,11 +102,11 @@ namespace :deploy do
     end
 
     def detect_manifest_path
-      manifests = fetch(:assets_manifest) ? [fetch(:assets_manifest)] : %w(.sprockets-manifest* manifest*.*)
+      manifests = fetch(:assets_manifest) ? [fetch(:assets_manifest)] : %w[.sprockets-manifest* manifest*.*]
       manifests.each do |pattern|
-        manifest_path = fetch(:assets_manifest) ? [fetch(:assets_manifest)] : ['public', fetch(:assets_prefix), pattern]
+        manifest_path = fetch(:assets_manifest) ? [fetch(:assets_manifest)] : ["public", fetch(:assets_prefix), pattern]
         candidate = release_path.join(*manifest_path)
-        return capture(:ls, candidate).strip.gsub(/(\r|\n)/,' ') if test(:ls, candidate)
+        return capture(:ls, candidate).strip.gsub(/(\r|\n)/, ' ') if test(:ls, candidate)
       end
       msg = 'Rails assets manifest file not found.'
       warn msg
