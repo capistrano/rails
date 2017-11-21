@@ -2,6 +2,10 @@
 
 * Your contribution here!
 
+# [1.3.1][] (Nov 21 2017)
+
+This release simply adds the MIT license to the capistrano-rails gemspec. There are no code changes. See [#205](https://github.com/capistrano/rails/issues/205).
+
 # [1.3.0][] (Jun 9 2017)
 
 * rails_assets_groups config option to set RAILS_GROUPS (https://github.com/capistrano/rails/pull/135)
@@ -77,7 +81,8 @@
 
 Initial release
 
-[master]: https://github.com/capistrano/rails/compare/v1.3.0...HEAD
+[master]: https://github.com/capistrano/rails/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/capistrano/rails/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/capistrano/rails/compare/v1.2.3...v1.3.0
 [1.2.3]: https://github.com/capistrano/rails/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/capistrano/rails/compare/v1.2.1...v1.2.2
