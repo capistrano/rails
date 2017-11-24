@@ -1,7 +1,7 @@
 # [master][]
 
 * Your contribution here!
-* Added option ':assets_manifest' to support custom manifest file path ([#215](https://github.com/capistrano/rails/pull/215))
+* Added option ':assets_manifests' to support custom manifest file path ([#216](https://github.com/capistrano/rails/pull/216))
 
 # [1.3.1][] (Nov 21 2017)
 
