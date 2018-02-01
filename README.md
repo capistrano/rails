@@ -7,12 +7,12 @@ Rails specific tasks for Capistrano v3:
 
 ## Installation
 
-Add these lines to your application's Gemfile:
+Add these Capistrano gems to your application's Gemfile using `require: false`:
 
 ```ruby
 group :development do
-  gem 'capistrano', '~> 3.6'
-  gem 'capistrano-rails', '~> 1.3'
+  gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-rails", "~> 1.3", require: false
 end
 ```
 
