@@ -1,6 +1,7 @@
 # [master][]
 
 * Your contribution here!
+* [#220](https://github.com/capistrano/rails/pull/220): Fix for root assets_prefix - [@Fudoshiki](https://github.com/Fudoshiki)
 
 # [1.3.1][] (Nov 21 2017)
 
