@@ -122,7 +122,7 @@ namespace :deploy do
   task :set_linked_dirs do
     linked_dirs = fetch(:linked_dirs, [])
     unless linked_dirs.include?('public')
-      linked_dirs << "public/#{fetch(:assets_prefix)}"
+      linked_dirs << "public#{"/#{fetch(:assets_prefix)}" unless fetch(:assets_prefix).empty? }"
       set :linked_dirs, linked_dirs.uniq
     end
   end
