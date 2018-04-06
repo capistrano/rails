@@ -90,7 +90,7 @@ Make sure you enable it by setting `linked_dirs` and `linked_files` options:
 
 ```ruby
 # deploy.rb
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 append :linked_files, 'config/database.yml', 'config/secrets.yml'
 ```
 
