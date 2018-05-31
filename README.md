@@ -71,6 +71,10 @@ set :assets_roles, [:web, :app]
 # This should match config.assets.prefix in your rails config/application.rb
 set :assets_prefix, 'prepackaged-assets'
 
+# Defaults to ["/path/to/release_path/public/#{fetch(:assets_prefix)}/.sprockets-manifest*", "/path/to/release_path/public/#{fetch(:assets_prefix)}/manifest*.*"]
+# This should match config.assets.manifest in your rails config/application.rb
+set :assets_manifests, ['app/assets/config/manifest.js']
+
 # RAILS_GROUPS env value for the assets:precompile task. Default to nil.
 set :rails_assets_groups, :assets
 
