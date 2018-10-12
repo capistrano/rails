@@ -88,10 +88,15 @@ namespace :deploy do
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
-          target = detect_manifest_path
-          source = release_path.join('assets_manifest_backup', File.basename(target))
-          if test "[[ -f #{source} && -f #{target} ]]"
-            execute :cp, source, target
+          targets = detect_manifest_path.split(' ')
+          sources = targets.map do |target|
+            release_path.join('assets_manifest_backup', File.basename(target))
+          end
+          if test(:ls, sources) && test(:ls, targets)
+            source_map = targets.zip(sources).to_h
+            source_map.each do |(source, target)|
+              execute :cp, source, target
+            end
           else
             msg = 'Rails assets manifest file (or backup file) not found.'
             warn msg
