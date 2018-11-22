@@ -113,6 +113,10 @@ set :migration_role, :app
 The advantage is you won't need to deploy your application to your database
 server, and overall a better separation of concerns.
 
+### Handle database creation at the first deploy
+
+Capistrano-rails does not create database for you before calling `deploy:migrate` task (see here why: [issues/118](https://github.com/capistrano/rails/issues/118#issuecomment-440870686)). That means `cap production deploy` will fail if database is not created yet on the deploy server. If that is your case, go to the deploy server, `cd` into latest release directory with your application and create database with the required environment. Example: `RAILS_ENV=production rails db:create` or `RAILS_ENV=production rails db:schema:load`. Then try deploy again.
+
 ## Contributing
 
 1. Fork it
