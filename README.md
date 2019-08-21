@@ -113,6 +113,26 @@ set :migration_role, :app
 The advantage is you won't need to deploy your application to your database
 server, and overall a better separation of concerns.
 
+#### Uploading your master.key
+
+You can use the below configuration to upload your `master.key` to the server if it isn't already present.
+
+```ruby
+append :linked_files, "config/master.key"
+
+namespace :deploy do
+  namespace :check do
+    before :linked_files, :set_master_key do
+      on roles(:app), in: :sequence, wait: 10 do
+        unless test("[ -f #{shared_path}/config/master.key ]")
+          upload! 'config/master.key', "#{shared_path}/config/master.key"
+        end
+      end
+    end
+  end
+end
+```
+
 ## Contributing
 
 1. Fork it
