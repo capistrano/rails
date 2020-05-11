@@ -92,7 +92,7 @@ namespace :deploy do
           sources = targets.map do |target|
             release_path.join('assets_manifest_backup', File.basename(target))
           end
-          if test(:ls, sources) && test(:ls, targets)
+          if test(:ls, *sources) && test(:ls, *targets)
             source_map = sources.zip(targets)
             source_map.each do |source, target|
               execute :cp, source, target
