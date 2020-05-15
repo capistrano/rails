@@ -2,6 +2,10 @@
 
 * Your contribution here!
 
+# [1.5.0][] (May 15 2020)
+
+* Handle restore of multiple asset manifests on rollback ([#226](https://github.com/capistrano/rails/pull/226))
+
 # [1.4.0][] (Jun 2 2018)
 
 * Added option ':assets_manifests' to support custom manifest file path ([#216](https://github.com/capistrano/rails/pull/216))
@@ -85,7 +89,8 @@ This release simply adds the MIT license to the capistrano-rails gemspec. There 
 
 Initial release
 
-[master]: https://github.com/capistrano/rails/compare/v1.4.0...HEAD
+[master]: https://github.com/capistrano/rails/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/capistrano/rails/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/capistrano/rails/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/capistrano/rails/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/capistrano/rails/compare/v1.2.3...v1.3.0
