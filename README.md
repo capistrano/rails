@@ -60,6 +60,9 @@ set :migration_role, :db
 # Defaults to the primary :db server
 set :migration_servers, -> { primary(fetch(:migration_role)) }
 
+# Defaults to `db:migrate`
+set :migration_command, 'db:migrate'
+
 # Defaults to false
 # Skip migration if files in db/migrate were not modified
 set :conditionally_migrate, true

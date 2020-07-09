@@ -1,6 +1,7 @@
 # [master][]
 
 * Your contribution here!
+* Added option `:migration_command` to allow overriding the default `db:migrate` used.
 
 # [1.5.0][] (May 15 2020)
 
