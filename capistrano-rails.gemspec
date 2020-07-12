@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Rails specific Capistrano tasks}
   gem.homepage      = "https://github.com/capistrano/rails"
   gem.metadata      = {
-    "changelog_uri" => "https://github.com/capistrano/rails/blob/master/CHANGELOG.md"
+    "changelog_uri" => "https://github.com/capistrano/rails/releases"
   }
 
   gem.licenses      = ["MIT"]
