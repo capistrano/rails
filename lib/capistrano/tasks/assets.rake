@@ -140,5 +140,6 @@ namespace :load do
         release_path.join("public", fetch(:assets_prefix), pattern)
       end
     }
+    set :keep_assets, nil
   end
 end
