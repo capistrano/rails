@@ -136,7 +136,7 @@ namespace :load do
     set :assets_roles, fetch(:assets_roles, [:web])
     set :assets_prefix, fetch(:assets_prefix, 'assets')
     set :assets_manifests, -> {
-      %w[.sprockets-manifest* manifest*.*].map do |pattern|
+      %w[.sprockets-manifest* manifest*.* .manifest.json].map do |pattern|
         release_path.join("public", fetch(:assets_prefix), pattern)
       end
     }
