@@ -51,7 +51,8 @@ namespace :deploy do
   task :rollback_assets => [:set_rails_env] do
     begin
       invoke 'deploy:assets:restore_manifest'
-    rescue Capistrano::FileNotFound
+    rescue Capistrano::FileNotFound, SSHKit::Runner::ExecuteError => e
+      raise if e.is_a?(SSHKit::Runner::ExecuteError) && !e.cause.is_a?(Capistrano::FileNotFound)
       invoke 'deploy:compile_assets'
     end
   end
