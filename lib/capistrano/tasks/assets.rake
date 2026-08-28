@@ -75,7 +75,7 @@ namespace :deploy do
     task :backup_manifest do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
-          backup_path = release_path.join('assets_manifest_backup')
+          backup_path = release_path.join('assets_manifest_backup').to_s.shellescape
 
           execute :mkdir, '-p', backup_path
           execute :cp,
@@ -88,10 +88,11 @@ namespace :deploy do
     task :restore_manifest do
       on release_roles(fetch(:assets_roles)) do
         within release_path do
-          targets = detect_manifest_path.split(' ')
+          targets = Shellwords.split(detect_manifest_path)
           sources = targets.map do |target|
-            release_path.join('assets_manifest_backup', File.basename(target))
+            release_path.join('assets_manifest_backup', File.basename(target)).to_s.shellescape
           end
+          targets.map!(&:shellescape)
           if test(:ls, *sources) && test(:ls, *targets)
             source_map = sources.zip(targets)
             source_map.each do |source, target|
@@ -108,7 +109,9 @@ namespace :deploy do
 
     def detect_manifest_path
       fetch(:assets_manifests).each do |candidate|
-        return capture(:ls, candidate).strip.gsub(/(\r|\n)/, ' ') if test(:ls, candidate)
+        if test(:ls, candidate)
+          return capture(:ls, '-1', candidate, strip: false).lines.map { |line| line.chomp.shellescape }.join(' ')
+        end
       end
       msg = 'Rails assets manifest file not found.'
       warn msg
@@ -137,7 +140,7 @@ namespace :load do
     set :assets_prefix, fetch(:assets_prefix, 'assets')
     set :assets_manifests, -> {
       %w[.sprockets-manifest* manifest*.* .manifest.json].map do |pattern|
-        release_path.join("public", fetch(:assets_prefix), pattern)
+        "#{release_path.join('public', fetch(:assets_prefix)).to_s.shellescape}/#{pattern}"
       end
     }
     set :keep_assets, nil
